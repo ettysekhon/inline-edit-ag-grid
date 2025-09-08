@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --font-primary: ui-sans-serif, system-ui, sans-serif;
+  --text-base-size: 16px;
+  --text-color: #1b1925;
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+}
+
+html {
+  overflow-y: scroll;
+  font-size: var(--text-base-size);
+}
+
+body {
+  min-width: 380px;
+  padding-right: 0;
+  margin: 0;
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: hsl(var(--foreground));
+  background-color: hsl(var(--background));
+}
+
+.dark {
+  --background: 222.2 47.4% 11.2%;
+  --foreground: 210 40% 98%;
+}
+
+.ag-theme-quartz,
+.ag-theme-quartz-dark {
+  font-family: var(--font-primary);
+  color: hsl(var(--foreground));
+}
