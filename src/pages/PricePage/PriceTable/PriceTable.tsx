@@ -1,11 +1,11 @@
 import { DataGrid } from "@/components/DataGrid";
-import type { PriceRow } from "@/types";
+import type { PriceRow, ThemeType } from "@/types";
 import { priceColumns } from "./priceColumns";
 
 interface PriceTableProps {
   data: PriceRow[];
   onDataChange: (newData: PriceRow[]) => void;
-  theme: 'light' | 'dark';
+  theme: ThemeType;
 }
 
 export function PriceTable({ data, onDataChange, theme }: PriceTableProps) {
@@ -14,6 +14,7 @@ export function PriceTable({ data, onDataChange, theme }: PriceTableProps) {
       columns={priceColumns}
       data={data}
       onDataChange={onDataChange}
+      getRowId={(params) => String(params.data.id)}
       theme={theme}
     />
   );

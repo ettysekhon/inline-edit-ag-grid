@@ -19,7 +19,7 @@ export async function fetchPrices(): Promise<PriceRow[]> {
       dv01: r.dv01,
       endDate: r.endDate ?? "",
       fixedRate: r.fixedRate ?? 0,
-      id: String(r.id ?? crypto.randomUUID()),
+      id: Number(r.id),
       index: r.index,
       notional: r.notional ?? 0,
       npv: r.npv,

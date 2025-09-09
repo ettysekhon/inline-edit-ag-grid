@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { setAgGridLicense, registerAgGridModules } from './agGridSetup'
+import { setAgGridLicense, registerAgGridModules } from "./agGridSetup";
 
-setAgGridLicense()
-registerAgGridModules()
+setAgGridLicense();
+registerAgGridModules();
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");

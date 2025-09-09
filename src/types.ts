@@ -1,3 +1,17 @@
+export enum Mode {
+  CLIENT = "client",
+  SERVER = "server",
+}
+
+export type ModeType = Mode;
+
+export enum Theme {
+  LIGHT = "light",
+  DARK = "dark",
+}
+
+export type ThemeType = Theme;
+
 export type PriceRow = {
   id?: string | number;
   productName?: string;

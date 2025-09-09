@@ -1,25 +1,28 @@
-import type {
+import { useCallback, useMemo, useRef } from "react";
+import { AgGridReact } from "ag-grid-react";
+import {
   CellValueChangedEvent,
   ColDef,
   ColGroupDef,
   DefaultMenuItem,
   GetContextMenuItemsParams,
+  GetRowIdParams,
   GridOptions,
   GridReadyEvent,
   MenuItemDef,
 } from "ag-grid-community";
 import { colorSchemeDark, themeQuartz } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react";
-import { useCallback, useMemo, useRef } from "react";
+import { Mode, ModeType, Theme, ThemeType } from "@/types";
 
 export interface DataGridProps<TData> {
   columns: (ColDef<TData> | ColGroupDef<TData>)[];
   data?: TData[];
   onRowClick?: (row: TData) => void;
   onDataChange?: (newData: TData[]) => void;
-  mode?: "client" | "server";
+  getRowId?: (params: GetRowIdParams<TData>) => string;
+  mode?: ModeType;
   gridOptionsOverride?: Partial<GridOptions<TData>>;
-  theme?: "light" | "dark";
+  theme?: ThemeType;
 }
 
 export function DataGrid<TData>({
@@ -27,9 +30,10 @@ export function DataGrid<TData>({
   data,
   onRowClick,
   onDataChange,
-  mode = "client",
+  getRowId,
+  mode = Mode.CLIENT,
   gridOptionsOverride,
-  theme = "light",
+  theme = Theme.LIGHT,
 }: DataGridProps<TData>) {
   const gridRef = useRef<AgGridReact<TData>>(null);
 
@@ -39,15 +43,28 @@ export function DataGrid<TData>({
       minWidth: 100,
       resizable: true,
       sortable: true,
+      flex: 1,
+    }),
+    []
+  );
+
+  const customParams = useMemo(
+    () => ({
+      accentColor: "hsl(var(--primary))",
+      backgroundColor: "hsl(var(--background))",
+      borderColor: "hsl(var(--border))",
+      foregroundColor: "hsl(var(--foreground))",
     }),
     []
   );
 
   const gridTheme = useMemo(() => {
-    return theme === "dark"
-      ? themeQuartz.withPart(colorSchemeDark)
-      : themeQuartz;
-  }, [theme]);
+    let baseTheme = themeQuartz;
+    if (theme === "dark") {
+      baseTheme = baseTheme.withPart(colorSchemeDark);
+    }
+    return baseTheme.withParams(customParams);
+  }, [theme, customParams]);
 
   const getContextMenuItems = useCallback(
     (
@@ -97,7 +114,7 @@ export function DataGrid<TData>({
       <AgGridReact<TData>
         ref={gridRef}
         theme={gridTheme}
-        rowData={mode === "client" ? data : undefined}
+        rowData={mode === Mode.CLIENT ? data : undefined}
         columnDefs={columns}
         defaultColDef={defaultColDef}
         animateRows={true}
@@ -108,12 +125,13 @@ export function DataGrid<TData>({
         }}
         onCellValueChanged={handleCellValueChanged}
         onRowClicked={
-          onRowClick ? (event) => event.data && onRowClick(event.data) : undefined
+          onRowClick
+            ? (event) => event.data && onRowClick(event.data)
+            : undefined
         }
-        rowModelType={mode === "server" ? "serverSide" : "clientSide"}
-        autoSizeStrategy={{
-          type: 'fitCellContents',
-        }}
+        rowModelType={mode === Mode.SERVER ? "serverSide" : "clientSide"}
+        autoSizeStrategy={{ type: "fitCellContents" }}
+        getRowId={getRowId}
         {...gridOptionsOverride}
       />
     </div>

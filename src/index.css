@@ -5,38 +5,60 @@
 *::after {
   box-sizing: border-box;
 }
-
 :root {
   --font-primary: ui-sans-serif, system-ui, sans-serif;
   --text-base-size: 16px;
-  --text-color: #1b1925;
   --background: 0 0% 100%;
-  --foreground: 222.2 47.4% 11.2%;
+  --foreground: 240 5.9% 10%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --primary: 355 100% 43%;
+  --primary-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
 }
 
 html {
-  overflow-y: scroll;
   font-size: var(--text-base-size);
+  overflow-y: scroll;
 }
 
 body {
-  min-width: 380px;
-  padding-right: 0;
   margin: 0;
   font-family: var(--font-primary);
+  color: hsl(var(--foreground));
+  min-width: 380px;
+  padding-right: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: hsl(var(--foreground));
   background-color: hsl(var(--background));
 }
 
 .dark {
-  --background: 222.2 47.4% 11.2%;
-  --foreground: 210 40% 98%;
+  --background: 240 5.9% 10%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 355 100% 43%;
+  --primary-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
 }
 
 .ag-theme-quartz,
 .ag-theme-quartz-dark {
   font-family: var(--font-primary);
   color: hsl(var(--foreground));
+}
+
+.ag-negative {
+  color: hsl(var(--destructive));
 }
